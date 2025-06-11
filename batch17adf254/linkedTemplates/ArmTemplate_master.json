@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "batch17adf254"
+		},
+		"gen2_git_delta1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'gen2_git_delta1'"
+		},
+		"ls_git_delta1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_git_delta1'"
+		},
+		"gen2_git_delta1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adfbatch17gen2.dfs.core.windows.net/"
+		},
+		"ls_git_delta1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "batch17sqlserver.database.windows.net"
+		},
+		"ls_git_delta1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "batch17sqldb"
+		},
+		"ls_git_delta1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Ramadmin"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "batch17adf254_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"gen2_git_delta1_accountKey": {
+						"value": "[parameters('gen2_git_delta1_accountKey')]"
+					},
+					"ls_git_delta1_password": {
+						"value": "[parameters('ls_git_delta1_password')]"
+					},
+					"gen2_git_delta1_properties_typeProperties_url": {
+						"value": "[parameters('gen2_git_delta1_properties_typeProperties_url')]"
+					},
+					"ls_git_delta1_properties_typeProperties_server": {
+						"value": "[parameters('ls_git_delta1_properties_typeProperties_server')]"
+					},
+					"ls_git_delta1_properties_typeProperties_database": {
+						"value": "[parameters('ls_git_delta1_properties_typeProperties_database')]"
+					},
+					"ls_git_delta1_properties_typeProperties_userName": {
+						"value": "[parameters('ls_git_delta1_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
