@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_git_delta1'"
 		},
+		"ls_ram_new1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_ram_new1'"
+		},
+		"ls_ramads_new1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_ramads_new1'"
+		},
 		"gen2_git_delta1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adfbatch17gen2.dfs.core.windows.net/"
@@ -30,6 +38,22 @@
 		"ls_git_delta1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "Ramadmin"
+		},
+		"ls_ram_new1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "batch17sqlserver.database.windows.net"
+		},
+		"ls_ram_new1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "batch17sqldb"
+		},
+		"ls_ram_new1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "ramadmin"
+		},
+		"ls_ramads_new1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adfbatch17gen2.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -64,6 +88,12 @@
 					"ls_git_delta1_password": {
 						"value": "[parameters('ls_git_delta1_password')]"
 					},
+					"ls_ram_new1_password": {
+						"value": "[parameters('ls_ram_new1_password')]"
+					},
+					"ls_ramads_new1_accountKey": {
+						"value": "[parameters('ls_ramads_new1_accountKey')]"
+					},
 					"gen2_git_delta1_properties_typeProperties_url": {
 						"value": "[parameters('gen2_git_delta1_properties_typeProperties_url')]"
 					},
@@ -75,6 +105,18 @@
 					},
 					"ls_git_delta1_properties_typeProperties_userName": {
 						"value": "[parameters('ls_git_delta1_properties_typeProperties_userName')]"
+					},
+					"ls_ram_new1_properties_typeProperties_server": {
+						"value": "[parameters('ls_ram_new1_properties_typeProperties_server')]"
+					},
+					"ls_ram_new1_properties_typeProperties_database": {
+						"value": "[parameters('ls_ram_new1_properties_typeProperties_database')]"
+					},
+					"ls_ram_new1_properties_typeProperties_userName": {
+						"value": "[parameters('ls_ram_new1_properties_typeProperties_userName')]"
+					},
+					"ls_ramads_new1_properties_typeProperties_url": {
+						"value": "[parameters('ls_ramads_new1_properties_typeProperties_url')]"
 					}
 				}
 			},

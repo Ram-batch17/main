@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_git_delta1'"
 		},
+		"ls_ram_new1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_ram_new1'"
+		},
+		"ls_ramads_new1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_ramads_new1'"
+		},
 		"gen2_git_delta1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adfbatch17gen2.dfs.core.windows.net/"
@@ -30,6 +38,22 @@
 		"ls_git_delta1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "Ramadmin"
+		},
+		"ls_ram_new1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "batch17sqlserver.database.windows.net"
+		},
+		"ls_ram_new1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "batch17sqldb"
+		},
+		"ls_ram_new1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "ramadmin"
+		},
+		"ls_ramads_new1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adfbatch17gen2.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -99,6 +123,45 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ls_ram_new1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_ram_new1_properties_typeProperties_server')]",
+					"database": "[parameters('ls_ram_new1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_ram_new1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_ram_new1_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_ramads_new1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ls_ramads_new1_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ls_ramads_new1_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseDataSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -121,7 +184,51 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseDataSource1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Connection to your source data store.",
+				"linkedServiceName": {
+					"referenceName": "ls_git_delta1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DataSourceTable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_git_delta1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseExternal_ControlTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "External control table to store high water mark value.",
+				"linkedServiceName": {
+					"referenceName": "ls_git_delta1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "watermarktable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_git_delta1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseExternal_ControlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -186,7 +293,50 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/tulasi_git_deltaload')]",
+			"name": "[concat(parameters('factoryName'), '/DataDestination1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Connection to your destination data store.",
+				"linkedServiceName": {
+					"referenceName": "gen2_git_delta1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Data_Destination_Container": {
+						"type": "String"
+					},
+					"Data_Destination_Directory": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": {
+							"value": "@{dataset().Data_Destination_Directory}",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@{dataset().Data_Destination_Container}",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/gen2_git_delta1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/incremental load')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -213,7 +363,7 @@
 								"partitionOption": "None"
 							},
 							"dataset": {
-								"referenceName": "AzureSqlDatabaseExternal_ControlTable",
+								"referenceName": "AzureSqlDatabaseExternal_ControlTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -240,7 +390,7 @@
 								"partitionOption": "None"
 							},
 							"dataset": {
-								"referenceName": "AzureSqlDatabaseDataSource",
+								"referenceName": "AzureSqlDatabaseDataSource1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -295,14 +445,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlDatabaseDataSource",
+								"referenceName": "AzureSqlDatabaseDataSource1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DataDestination",
+								"referenceName": "DataDestination1",
 								"type": "DatasetReference",
 								"parameters": {
 									"Data_Destination_Container": {
@@ -336,9 +486,9 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[updatewatermark]",
+							"storedProcedureName": "[[dbo].[update_watermark_1]",
 							"storedProcedureParameters": {
-								"Last_Modifiedtime": {
+								"LastModifieddate": {
 									"value": {
 										"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
 										"type": "Expression"
@@ -359,11 +509,11 @@
 				"parameters": {
 					"Data_Source_Table_Name": {
 						"type": "String",
-						"defaultValue": "batch17sc.incrementload"
+						"defaultValue": "dbo.SalesTransactions"
 					},
 					"Data_Source_WaterMarkColumn": {
 						"type": "String",
-						"defaultValue": "LastModifytime"
+						"defaultValue": " LastModifiedDate"
 					},
 					"Data_Destination_Container": {
 						"type": "String",
@@ -371,23 +521,23 @@
 					},
 					"Data_Destination_Directory": {
 						"type": "String",
-						"defaultValue": "meta driven_output"
+						"defaultValue": "ram_output"
 					},
 					"Control_Table_Table_Name": {
 						"type": "String",
-						"defaultValue": " dbo.watermarktable1"
+						"defaultValue": "dbo.WatermarkTable_1"
 					},
 					"Control_Table_Column_Name": {
 						"type": "String",
-						"defaultValue": "WatermarkValue"
+						"defaultValue": "LastWatermark"
 					}
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlDatabaseExternal_ControlTable')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlDatabaseDataSource')]",
-				"[concat(variables('factoryId'), '/datasets/DataDestination')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlDatabaseExternal_ControlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlDatabaseDataSource1')]",
+				"[concat(variables('factoryId'), '/datasets/DataDestination1')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_git_delta1')]"
 			]
 		}
