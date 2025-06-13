@@ -89,7 +89,15 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "DelimitedTextSink"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false,
 					"dataIntegrationUnits": 0
@@ -139,7 +147,10 @@
 					"storedProcedureName": "[dbo].[update_watermark_1]",
 					"storedProcedureParameters": {
 						"LastModifieddate": {
-							"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
+							"value": {
+								"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
+								"type": "Expression"
+							},
 							"type": "DateTime"
 						}
 					}
