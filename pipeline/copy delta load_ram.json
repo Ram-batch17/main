@@ -1,5 +1,5 @@
 {
-	"name": "tulasi_git_deltaload",
+	"name": "copy delta load_ram",
 	"properties": {
 		"description": "Copy new or updated rows only from database using external control table",
 		"activities": [
@@ -89,15 +89,7 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
+						"type": "DelimitedTextSink"
 					},
 					"enableStaging": false,
 					"dataIntegrationUnits": 0
@@ -144,16 +136,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[updatewatermark]",
+					"storedProcedureName": "[dbo].[update_watermark_1]",
 					"storedProcedureParameters": {
-						"Last_Modifiedtime": {
+						"LastModifieddate": {
 							"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
 							"type": "DateTime"
 						}
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "ls_git_delta1",
+					"referenceName": "ls_ram_new1",
 					"type": "LinkedServiceReference"
 				}
 			}
@@ -161,11 +153,11 @@
 		"parameters": {
 			"Data_Source_Table_Name": {
 				"type": "String",
-				"defaultValue": "batch17sc.incrementload"
+				"defaultValue": "dbo.SalesTransactions"
 			},
 			"Data_Source_WaterMarkColumn": {
 				"type": "String",
-				"defaultValue": "LastModifytime"
+				"defaultValue": "LastModifiedDate"
 			},
 			"Data_Destination_Container": {
 				"type": "String",
@@ -173,15 +165,15 @@
 			},
 			"Data_Destination_Directory": {
 				"type": "String",
-				"defaultValue": "meta driven_output"
+				"defaultValue": "ram_output"
 			},
 			"Control_Table_Table_Name": {
 				"type": "String",
-				"defaultValue": " dbo.watermarktable1"
+				"defaultValue": "dbo. WatermarkTable_1"
 			},
 			"Control_Table_Column_Name": {
 				"type": "String",
-				"defaultValue": "WatermarkValue"
+				"defaultValue": "LastWatermark"
 			}
 		},
 		"annotations": []
