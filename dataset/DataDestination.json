@@ -3,11 +3,7 @@
 	"properties": {
 		"description": "Connection to your destination data store.",
 		"linkedServiceName": {
- Ram
-			"referenceName": "ls_ramads_new1",
-
 			"referenceName": "gen2_git_delta1",
- main
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

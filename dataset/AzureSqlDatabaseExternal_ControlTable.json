@@ -3,11 +3,7 @@
 	"properties": {
 		"description": "External control table to store high water mark value.",
 		"linkedServiceName": {
- Ram
-			"referenceName": "ls_ram_new1",
-
 			"referenceName": "ls_git_delta1",
- main
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
