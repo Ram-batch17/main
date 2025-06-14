@@ -144,13 +144,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"storedProcedureName": "[dbo].[updatewatermark]",
 					"storedProcedureParameters": {
-						"LastModifyDate": {
-							"value": {
-								"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
-								"type": "Expression"
-							},
-							"type": "datetime"
+						"Last_Modifiedtime": {
+							"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
+							"type": "DateTime"
 						}
 					}
 				},
