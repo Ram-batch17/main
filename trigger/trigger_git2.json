@@ -1,0 +1,24 @@
+{
+	"name": "trigger_git2",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline_git2",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2025-06-15T13:36:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
