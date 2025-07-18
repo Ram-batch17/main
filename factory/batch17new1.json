@@ -1,0 +1,17 @@
+{
+	"name": "batch17new1",
+	"properties": {
+		"globalParameters": {
+			"Gpara1": {
+				"type": "string",
+				"value": "10"
+			}
+		}
+	},
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "14c1fe81-4133-4184-a5fb-a81c7beea234",
+		"tenantId": "32b610db-9a2b-4039-baca-7ba196063f48"
+	}
+}

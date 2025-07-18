@@ -1,0 +1,37 @@
+{
+	"name": "class1-a",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 2
+				}
+			},
+			{
+				"name": "Wait2",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 3
+				}
+			},
+			{
+				"name": "Wait3",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 4
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-12T06:10:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

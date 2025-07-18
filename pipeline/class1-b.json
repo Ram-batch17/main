@@ -1,0 +1,27 @@
+{
+	"name": "class1-b",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": {
+						"value": "@pipeline().parameters.p1",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"p1": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-07-12T06:12:38Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

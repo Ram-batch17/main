@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "Connection to your destination data store.",
 		"linkedServiceName": {
-			"referenceName": "gen2_git_delta1",
+			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -34,5 +34,6 @@
 			"quoteChar": "\""
 		},
 		"schema": []
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

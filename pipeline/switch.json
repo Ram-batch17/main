@@ -1,0 +1,68 @@
+{
+	"name": "switch",
+	"properties": {
+		"activities": [
+			{
+				"name": "Switch1",
+				"type": "Switch",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@pipeline().parameters.par",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "tulasi",
+							"activities": [
+								{
+									"name": "Wait2",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 3
+									}
+								}
+							]
+						},
+						{
+							"value": "ram",
+							"activities": [
+								{
+									"name": "Wait3",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 2
+									}
+								}
+							]
+						}
+					],
+					"defaultActivities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 2
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"par": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-07-15T05:23:21Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
