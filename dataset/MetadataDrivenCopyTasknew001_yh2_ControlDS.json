@@ -1,0 +1,18 @@
+{
+	"name": "MetadataDrivenCopyTasknew001_yh2_ControlDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "metahospital1716",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "MetadataDrivenCopyTasknew001_yh2_20250821"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "MainControlTable_yh2"
+		}
+	}
+}
